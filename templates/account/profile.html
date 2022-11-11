@@ -1,0 +1,124 @@
+{% load static %}
+{% include 'account/header.html' %}
+    <div class="breadcrumb-area breadcrumb-padding">
+      <div class="container custom-container-one">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb-contents">
+              <h4 class="breadcrumb-contents-title"> Profile Details </h4>
+              <ul class="breadcrumb-contents-list list-style-none">
+                <li class="breadcrumb-contents-list-item">
+                  <a href="index.html" class="breadcrumb-contents-list-item-link"> Home </a>
+                </li>
+                <li class="breadcrumb-contents-list-item"> Profile </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="body-overlay"></div>
+    <div class="dashboard-area section-bg-2 dashboard-padding">
+      <div class="container">
+        <div class="dashboard-contents-wrapper">
+          <div class="dashboard-icon">
+            <div class="sidebar-icon">
+              <i class="las la-bars"></i>
+            </div>
+          </div>
+          {% include 'account/navbar.html' %}
+          <div class="dashboard-right-contents mt-4 mt-lg-0">
+            {% include 'flash-message.html' %}
+            <div class="dashboard-reservation">
+              <div class="single-reservation bg-white base-padding">
+                <div class="single-reservation-flex mb-4">
+                  <div class="single-reservation-author">
+                    <div class="single-reservation-author-flex">
+                      <div class="single-reservation-author-thumb">
+                        <img src="{% static 'assets/img/dashboard/author.jpg' %}" alt="img">
+                      </div>
+                      <div class="single-reservation-author-contents">
+                        <h5 class="single-reservation-author-contents-title"> {{ user.first_name }} {{ user.last_name }} </h5>
+                        <p class="single-reservation-author-contents-para"> Member since {{ user.date_joined|date }} </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="btn-wrapper">
+                    <a href="{% url 'account_password' %}" class="cmn-btn btn-border"> Change Password </a>
+                  </div>
+                </div>
+                <div class="single-reservation-item">
+                  <div class="single-reservation-contact">
+                    <div class="single-reservation-contact-item">
+                      <span class="single-reservation-contact-list">
+                        <span>
+                          <i class="las la-map-marker-alt"></i>
+                        </span> {{ user.profile.address }} </span>
+                    </div>
+                    <div class="single-reservation-contact-item">
+                      <a href="#" class="single-reservation-contact-list">
+                        <span>
+                          <i class="las la-envelope"></i>
+                        </span>
+                        <span>{{ user.email }}</span>
+                      </a>
+                    </div>
+                    <div class="single-reservation-contact-item">
+                      <a href="#" class="single-reservation-contact-list">
+                        <span>
+                          <i class="las la-phone-alt"></i>
+                        </span> {{ user.profile.phone_no }} </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="single-reservation bg-white base-padding">
+                <h3 class="single-reservation-title"> Edit Profile </h3>
+                <div class="custom--form dashboard-form">
+                  <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="dashboard-flex-input">
+                      <div class="dashboard-input mt-4">
+                        <label class="label-title"> First Name </label>
+                        <input type="text" class="form--control" name="first_name" value="{{ user.first_name }}" placeholder="First Name">
+                      </div>
+                      <div class="dashboard-input mt-4">
+                        <label class="label-title"> Last Name </label>
+                        <input type="text" class="form--control" name="last_name" value="{{ user.last_name }}" placeholder="Last Name">
+                      </div>
+                    </div>
+                    <div class="dashboard-flex-input">
+                      <div class="dashboard-input mt-4">
+                        <label class="label-title"> Address </label>
+                        <input type="text" class="form--control" name="address" value="{{ user.profile.address }}" placeholder="Address">
+                      </div>
+                    </div>
+                   
+                    <div class="dashboard-flex-input">
+                      <div class="dashboard-input mt-4">
+                        <label class="label-title"> Email Address </label>
+                        <input type="text" class="form--control" readonly value="{{ user.email }}" placeholder="Email Address">
+                      </div>
+                    </div>
+                    <div class="dashboard-flex-input">
+                      <div class="dashboard-input mt-4">
+                        <label class="label-title"> Phone Number </label>
+                        <input type="text" class="form--control" id="phone" name="phone_no" value="{{ user.profile.phone_no }}" placeholder="Phone Number">
+                      </div>
+                    </div>
+                    <div class="btn-wrapper mt-4">
+                      <button type="submit" name="submit" value="update" class="cmn-btn btn-bg-1"> Save Changes </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   {% include 'account/footer.html' %}

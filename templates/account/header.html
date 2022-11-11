@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title> {{ general_list.site_name }} - {{ page_desc }} </title>
+      <meta name="author" content="{{ general_list.site_dev }}">
+      <meta name="description" content="{{ general_list.site_name }} - {{ page_desc }}">
+      <meta name="keywords" content="{{ general_list.site_name }} - {{ page_desc }}">
+      <meta name="robots" content="{{ general_list.site_name }} - {{ page_desc }}">
+      <link rel=icon href="{% static 'favicon.png' %}" sizes="16x16" type="icon/png">
+      <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/css/line-awesome.min.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/css/flatpicker.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/css/intlTelInput.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script> 
+   </head>
+   <body>
+      <header class="header-style-01">
+         <nav class="navbar navbar-area navbar-border navbar-padding navbar-expand-lg">
+            <div class="container custom-container-one nav-container">
+               <div class="logo-wrapper">
+                  <a href="{%  url 'home' %}" class="logo">
+                  <img src="{% static 'assets/img/cover.png' %}" width="100px" alt="">
+                  </a>
+               </div>
+               <div class="responsive-mobile-menu d-lg-none">
+                  <a href="javascript:void(0)" class="click-nav-right-icon">
+                  <i class="las la-ellipsis-v"></i>
+                  </a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#hotel_booking_menu">
+                  <span class="navbar-toggler-icon"></span>
+                  </button>
+               </div>
+               <div class="collapse navbar-collapse" id="hotel_booking_menu">
+                  <ul class="navbar-nav">
+                     <li><a href="{% url 'home' %}"> Home </a></li>
+                     <li><a href="{% url 'rooms' %}"> Rooms </a></li>
+                     <li><a href="{% url 'about' %}"> About </a></li>
+                     <li><a href="{% url 'contact' %}"> Contact Us </a></li>
+                  </ul>
+               </div>
+               {% if request.user.is_authenticated %}
+               <div class="navbar-right-content show-nav-content">
+                  <div class="single-right-content">
+                     <div class="navbar-author">
+                        <div class="navbar-author-flex">
+                           <div class="navbar-author-thumb">
+                              <img src="{% static 'assets/img/single-page/author.jpg' %}" alt="img">
+                           </div>
+                           <div class="navbar-author-name">
+                              <h6 class="navbar-author-name-title"> {{ user.username }} </h6>
+                           </div>
+                        </div>
+                        <div class="navbar-author-wrapper">
+                           <div class="navbar-author-wrapper-list">
+                              <a href="{% url 'account' %}" class="navbar-author-wrapper-list-item"> Dashboard </a>
+                              <a href="{% url 'account_logout' %}" class="navbar-author-wrapper-list-item"> Log out </a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               {% else %}
+               <div class="navbar-right-content show-nav-content">
+                  <div class="single-right-content">
+                    <div class="navbar-right-flex">
+                      <div class="navbar-right-btn">
+                        <a href="{% url 'account_login' %}"> Log In </a>
+                      </div>
+                      <div class="btn-wrapper">
+                        <a href="{% url 'account_register' %}" class="cmn-btn btn-bg-1 radius-10"> Sign Up </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {% endif %}
+            </div>
+         </nav>
+      </header>

@@ -1,0 +1,231 @@
+{% load static %}
+{% include 'account/header.html' %}
+    <div class="breadcrumb-area breadcrumb-padding">
+      <div class="container custom-container-one">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb-contents">
+              <h4 class="breadcrumb-contents-title"> Hotel Details </h4>
+              <ul class="breadcrumb-contents-list list-style-none">
+                <li class="breadcrumb-contents-list-item">
+                  <a href="{% url 'home' %}" class="breadcrumb-contents-list-item-link"> Home </a>
+                </li>
+                <li class="breadcrumb-contents-list-item">
+                  <a href="{% url 'rooms' %}" class="breadcrumb-contents-list-item-link"> Hotels </a>
+                </li>
+                <li class="breadcrumb-contents-list-item"> Hotel Details </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="hotel-details-area section-bg-2 pat-100 pab-100">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-xl-8 col-lg-7">
+            <div class="details-left-wrapper">
+              <div class="details-contents bg-white radius-10">
+                <div class="details-contents-header">
+                  <div class="details-contents-thumb details-contents-main-thumb bg-image" style="background-image: url({{ rooms.image.url }}); background-size: 100%;"></div>
+                  <div class="details-contents-header-flex">
+                    {% for image in rooms.hotel_gallery_set.all  %}
+                    <div class="details-contents-header-thumb">
+                      <img src="{{ image.image.url }}" width="300px" alt="img">
+                    </div>
+                    {% endfor %}
+
+                  </div>
+                </div>
+                <div class="hotel-view-contents">
+                  <div class="hotel-view-contents-header">
+                    <span class="hotel-view-contents-review">
+                      <i class="las la-star"></i> 4.5 <span class="hotel-view-contents-review-count"> (380) </span>
+                    </span>
+                    <h3 class="hotel-view-contents-title"> {{ rooms.name }} </h3>
+                  </div>
+                  <div class="hotel-view-contents-middle">
+                    <div class="hotel-view-contents-flex">
+                      <div class="hotel-view-contents-icon d-flex gap-1">
+                        <span>
+                          <i class="las la-parking"></i>
+                        </span>
+                        <p class="hotel-view-contents-icon-title flex-fill"> Parking </p>
+                      </div>
+                      <div class="hotel-view-contents-icon d-flex gap-1">
+                        <span>
+                          <i class="las la-wifi"></i>
+                        </span>
+                        <p class="hotel-view-contents-icon-title flex-fill"> Wifi </p>
+                      </div>
+                      <div class="hotel-view-contents-icon d-flex gap-1">
+                        <span>
+                          <i class="las la-coffee"></i>
+                        </span>
+                        <p class="hotel-view-contents-icon-title flex-fill"> Breakfast </p>
+                      </div>
+                      <div class="hotel-view-contents-icon d-flex gap-1">
+                        <span>
+                          <i class="las la-quidditch"></i>
+                        </span>
+                        <p class="hotel-view-contents-icon-title flex-fill"> Room Service </p>
+                      </div>
+                      <div class="hotel-view-contents-icon d-flex gap-1">
+                        <span>
+                          <i class="las la-swimming-pool"></i>
+                        </span>
+                        <p class="hotel-view-contents-icon-title flex-fill"> Pool </p>
+                      </div>
+                      <div class="hotel-view-contents-icon d-flex gap-1">
+                        <span>
+                          <i class="las la-receipt"></i>
+                        </span>
+                        <p class="hotel-view-contents-icon-title flex-fill"> Reception </p>
+                      </div>
+                      <div class="hotel-view-contents-icon d-flex gap-1">
+                        <span>
+                          <i class="las la-dumbbell"></i>
+                        </span>
+                        <p class="hotel-view-contents-icon-title flex-fill"> Gym </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel-view-contents-bottom">
+                    <div class="hotel-view-contents-bottom-flex">
+                      <div class="hotel-view-contents-bottom-contents">
+                        <h4 class="hotel-view-contents-bottom-title"> {{ general_list.currency_symbol|safe }}{{ rooms.price }} <sub>/Night</sub>
+                        </h4>
+                      </div>
+                      {% comment %} <div class="btn-wrapper">
+                        <a href="javascript:void(0)" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
+                      </div> {% endcomment %}
+                    </div>
+                  </div>
+                </div>
+                <div class="details-contents-tab">
+                  <ul class="tabs details-tab details-tab-border">
+                    <li class="active" data-tab="about"> About </li>
+                    <li data-tab="reviews"> Reviews </li>
+                  </ul>
+                  <div id="about" class="tab-content-item active">
+                    <div class="about-tab-contents">
+                      <p class="about-tab-contents-para"> {{ rooms.description }} </p>
+                    </div>
+                  </div>
+                  <div id="reviews" class="tab-content-item">
+                    <div class="review-tab-contents">
+                      <div class="review-tab-contents-single">
+                        <div class="rating-wrap">
+                          <div class="ratings">
+                            <span class="hide-rating"></span>
+                            <span class="show-rating"></span>
+                          </div>
+                          <p>
+                            <span class="total-ratings">(167)</span>
+                          </p>
+                        </div>
+                        <p class="about-review-para mt-3"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a egestas leo. Aliquam ut ante lobortis tellus cursus pellentesque. Praesent feugiat tellus quis aliquet </p>
+                        <div class="review-tab-contents-author mt-4">
+                          <h4 class="review-tab-contents-author-name"> Sandra M. Hurt </h4>
+                          <p class="review-tab-contents-author-para mt-2"> TrustPilot </p>
+                        </div>
+                      </div>
+                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-5">
+            
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="sticky-top">
+                <div class="hotel-details-widget hotel-details-widget-padding widget bg-white radius-10">
+                    <div class="details-sidebar">
+                    <div class="details-sidebar-dropdown custom-form">
+                        <div class="single-input">
+                        <label class="details-sidebar-dropdown-title"> Check In </label>
+                        <input class="form--control date-picker" type="date" data-date-format="DD MMMM YYYY" value="6" id="check-in" name="check_in" onchange="calTotal()" placeholder="Check in">
+                        </div>
+                        <div class="single-input mt-3">
+                        <label class="details-sidebar-dropdown-title"> Check Out </label>
+                        <input class="form--control date-picker" type="date" id="check-out" name="check_out" onchange="calTotal()" placeholder="Check out">
+                        </div>
+                    
+                    </div>
+                    <div class="details-sidebar-quantity pt-4">
+                        <div class="details-sidebar-quantity-flex">
+                        <div class="details-sidebar-quantity-item">
+                            <h6 class="details-sidebar-quantity-title"> Guest </h6>
+                            <div class="details-sidebar-quantity-field">
+                            <span class="minus">
+                                <i class="las la-minus" onclick="calTotal()"></i>
+                            </span>
+                            <input class="quantity-input" type="number" name="guest" id="guest" value="1">
+                            <span class="plus">
+                                <i class="las la-plus" onclick="calTotal()"></i>
+                            </span>
+                            </div>
+                        </div>
+                        
+                        <div class="details-sidebar-quantity-item">
+                            <h6 class="details-sidebar-quantity-title"> Room </h6>
+                            <div class="details-sidebar-quantity-field">
+                            <span class="minus">
+                                <i class="las la-minus" onclick="minusRoom()"></i>
+                            </span>
+                            <input class="quantity-input" type="number" name="room" id="room" value="1">
+                            <span class="plus">
+                                <i class="las la-plus" onclick="plusRoom()"></i>
+                            </span>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
+                        <li class="list">
+                        <span class="regular"> Total </span>
+                        <span class="strong color-one fs-20" > {{ general_list.currency_symbol|safe }}<span id="total">{{ rooms.price }}</span> </span>
+                        </li>
+                    </ul>
+                    
+                    <input type="hidden" id="price" value="{{ rooms.price }}" >
+                    <input type="hidden" id="amount" name="amount" value="{{ rooms.price }}" >
+                    <div class="btn-wrapper mt-4 text-center">
+                      {% if request.user.is_authenticated %}
+                        <button class="cmn-btn btn-bg-1 btn-small" type="submit" name="submit" >GO TO CHECKOUT</button>
+                        {% else %}
+                        <a href="{% url 'account_login' %}?next={% url 'room_view' rooms.hotel_id %}" class="cmn-btn btn-bg-1 btn-small">LOGIN TO PROCEED</a>
+                        {% endif %}
+                    </div>
+                    </div>
+                </div>
+            </form>
+
+             
+              <div class="hotel-details-widget hotel-details-widget-padding widget bg-white radius-10">
+                <div class="details-sidebar">
+                  <div class="details-sidebar-offer center-text radius-10">
+                    <div class="details-sidebar-offer-shapes">
+                      <img src="{% static 'assets/img/single-page/offer_shapes.png' %}" alt="shapes">
+                    </div>
+                    <div class="details-sidebar-offer-thumb">
+                      <img src="{% static 'assets/img/single-page/offer.png' %}" alt="">
+                    </div>
+                    <div class="btn-wrapper mt-5">
+                      <a href="javascript:void(0)" class="cmn-btn btn-bg-white"> Book Now </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+   {% include 'account/footer.html' %}

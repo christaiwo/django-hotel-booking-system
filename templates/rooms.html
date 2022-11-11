@@ -1,0 +1,99 @@
+{% load static %}
+{% include 'account/header.html' %}
+    <div class="breadcrumb-area section-bg-2 breadcrumb-padding">
+      <div class="container custom-container-one">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb-contents">
+              <h4 class="breadcrumb-contents-title"> Hotel List </h4>
+              <ul class="breadcrumb-contents-list list-style-none">
+                <li class="breadcrumb-contents-list-item">
+                  <a href="index.html" class="breadcrumb-contents-list-item-link"> Home </a>
+                </li>
+                <li class="breadcrumb-contents-list-item"> Hotels </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="responsive-overlay"></div>
+    <section class="hotel-list-area section-bg-2 pat-100 pab-100">
+      <div class="container">
+        <div class="shop-contents-wrapper mt-5">
+          <div class="shop-grid-contents">
+         
+            <div id="tab-grid" class="tab-content-item active mt-4">
+              <div class="row gy-4">
+                
+                {% for room in rooms %}
+                <div class="col-md-4">
+                  <div class="hotel-view bg-white radius-20">
+                    <a href="{% url 'room_view' room.hotel_id %}" class="hotel-view-thumb hotel-view-grid-thumb bg-image" style="background-image: url({{ room.image.url }}); background-size: 100%;"></a>
+                   
+                    <div class="hotel-view-contents">
+                      <div class="hotel-view-contents-header">
+                        {% comment %} <span class="hotel-view-contents-review">
+                          <i class="las la-star"></i> 4.5 <span class="hotel-view-contents-review-count"> (380) </span>
+                        </span> {% endcomment %}
+                        <h3 class="hotel-view-contents-title">
+                          <a href="{% url 'room_view' room.hotel_id %}"> {{ room.name }} </a>
+                        </h3>
+                        <div class="hotel-view-contents-location mt-2">
+                            
+                          <span class="hotel-view-contents-location-para"> {{ room.decscription|truncatechars:70 }} </span>
+                        </div>
+                      </div>
+
+
+                      <div class="hotel-view-contents-middle">
+                        <div class="hotel-view-contents-flex">
+                          <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Car Parking">
+                            <i class="las la-parking"></i>
+                          </div>
+                          <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Free Wifi">
+                            <i class="las la-wifi"></i>
+                          </div>
+                          <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Free Breakfast">
+                            <i class="las la-coffee"></i>
+                          </div>
+                          <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Home Service">
+                            <i class="las la-quidditch"></i>
+                          </div>
+                          <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Swimming Pool">
+                            <i class="las la-swimming-pool"></i>
+                          </div>
+                          <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Reception">
+                            <i class="las la-receipt"></i>
+                          </div>
+                          <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Gym">
+                            <i class="las la-dumbbell"></i>
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <div class="hotel-view-contents-bottom">
+                        <div class="hotel-view-contents-bottom-flex">
+                          <div class="hotel-view-contents-bottom-contents">
+                            <h4 class="hotel-view-contents-bottom-title"> {{ general_list.currency_symbol|safe }}{{ room.price }} <sub>/Night</sub>
+                            </h4>
+                          </div>
+                          <div class="btn-wrapper">
+                            <a href="{% url 'room_view' room.hotel_id %}" class="cmn-btn btn-bg-1 btn-small"> View More </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+              </div>
+            
+            </div>
+         
+          </div>
+        </div>
+      </div>
+    </section>
+   {% include 'account/footer.html' %}

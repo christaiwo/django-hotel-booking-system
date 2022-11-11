@@ -1,0 +1,176 @@
+{% load static %}
+{% include 'account/header.html' %}
+      <div class="breadcrumb-area breadcrumb-padding">
+         <div class="container custom-container-one">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="breadcrumb-contents">
+                     <h4 class="breadcrumb-contents-title"> Dashboard </h4>
+                     <ul class="breadcrumb-contents-list list-style-none">
+                        <li class="breadcrumb-contents-list-item"> <a href="index.html" class="breadcrumb-contents-list-item-link"> Home </a> </li>
+                        <li class="breadcrumb-contents-list-item"> Dashboard </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="body-overlay"></div>
+      <div class="dashboard-area section-bg-2 dashboard-padding">
+         <div class="container">
+            <div class="dashboard-contents-wrapper">
+               <div class="dashboard-icon">
+                  <div class="sidebar-icon">
+                     <i class="las la-bars"></i>
+                  </div>
+               </div>
+               {% include 'account/navbar.html' %}
+               <div class="dashboard-right-contents mt-4 mt-lg-0">
+                  {% include 'flash-message.html' %}
+                  <div class="dashboard-promo">
+                     <div class="row gy-4 justify-content-center">
+                        
+                        <div class="col-xxl-6 col-xl-6 col-sm-6 orders-child">
+                           <div class="single-order">
+                              <div class="single-order-flex">
+                                 <div class="single-order-contents">
+                                    <span class="single-order-contents-subtitle"> Reservations </span>
+                                    <h2 class="single-order-contents-title"> {{ user.booking_set.count }} </h2>
+                                 </div>
+                                 <div class="single-order-icon">
+                                    <i class="las la-check-circle"></i>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                       
+                        <div class="col-xxl-6 col-xl-6 col-sm-6 orders-child">
+                           <div class="single-order">
+                              <div class="single-order-contents">
+                                 <span class="single-order-contents-subtitle"> Tickets </span>
+                                 <h2 class="single-order-contents-title">{{ user.ticket_set.count }} </h2>
+                              </div>
+                              <div class="single-order-icon">
+                                 <i class="las la-clipboard-check"></i>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="dashboard-reservation">
+                     {% for booking in user.booking_set.all %}
+                     <div class="single-reservation bg-white base-padding">
+                        <div class="single-reservation-expandIcon"> <i class="las la-angle-down"></i> </div>
+                        <div class="single-reservation-head">
+                           <div class="single-reservation-flex">
+                              <div class="single-reservation-content">
+                                 <h5 class="single-reservation-content-title"> Reservation ID </h5>
+                                 <span class="single-reservation-content-id"> #{{ booking.booking_id }} </span>
+                              </div>
+                              {% if booking.status == 0 %}
+                              <div class="single-reservation-btn">
+                                 <a href="{% url 'checkout' booking.booking_id %}" class="dash-btn btn-pending"> Confirm & Pay </a>
+                              </div>
+                              {% elif booking.status == 2 %}
+                              <div class="single-reservation-btn">
+                                 <a href="#" class="dash-btn btn-cancelled"> Canceled </a>
+                              </div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="single-reservation-inner">
+                           <div class="single-reservation-item">
+                              <div class="single-reservation-name">
+                                 <h5 class="single-reservation-name-title"> {{ user.first_name }} {{ user.last_name }} </h5>
+                                 <p class="single-reservation-name-para"> {{ user.profile.address }} </p>
+                              </div>
+                           </div>
+                           <div class="single-reservation-item">
+                              <div class="single-reservation-details">
+                                 <div class="single-reservation-details-item">
+                                    <span class="single-reservation-details-subtitle"> Check in </span>
+                                    <h5 class="single-reservation-details-title"> {{ booking.check_in }} </h5>
+                                 </div>
+                                 <div class="single-reservation-details-item">
+                                    <span class="single-reservation-details-subtitle"> Check Out </span>
+                                    <h5 class="single-reservation-details-title"> {{ booking.check_out }}</h5>
+                                 </div>
+                                 <div class="single-reservation-details-item">
+                                    <span class="single-reservation-details-subtitle"> Guests & Rooms </span>
+                                    <h5 class="single-reservation-details-title"> {{ booking.guest }} Person, {{ booking_get.room }} Rooms </h5>
+                                 </div>
+                                 <div class="single-reservation-details-item">
+                                    <span class="single-reservation-details-subtitle"> Booked </span>
+                                    <h5 class="single-reservation-details-title"> {{ booking.date|date }} </h5>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="single-reservation-item">
+                              <div class="single-reservation-flex">
+                                 <div class="single-reservation-content">
+                                    <h5 class="single-reservation-content-title"> Total Bill </h5>
+                                    <span class="single-reservation-content-price"> {{ general_list.currency_symbol|safe }}{{ booking.amount }} </span>
+                                 </div>
+                                
+                              </div>
+                           </div>
+                           <div class="single-reservation-item">
+                              <div class="single-reservation-flex">
+                                 <div class="single-reservation-name">
+                                    <h5 class="single-reservation-name-title"> {{ general_list.site_name }} </h5>
+                                    <p class="single-reservation-name-para">  {{ general_list.site_address }}  </p>
+                                 </div>
+                                 <div class="single-reservation-btn">
+                                    {% if booking.status == 0 %}
+                                    <a href="?cancel={{ booking.booking_id }}" class="dash-btn"> <i class="las la-exclamation-circle"></i> Cancel? </a>
+                                    {% elif booking.status == 2 %}
+
+                                    {% else %}
+                                    <a href="javascript:void(0)" class="dash-btn popup-click"> <i class="las la-exclamation-circle"></i> Cancel? </a>
+                                    {% endif %}
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     {% endfor %}
+
+
+                  </div>
+               
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="popup-overlay"></div>
+      
+      <div class="popup-fixed">
+         <div class="popup-contents popup-cancell-modal">
+            <form method="POST" action="">
+               {% csrf_token %}
+               <h2 class="popup-contents-title"> Why do you want to cancel? </h2>
+               <div class="single-input mt-4">
+                  <label class="popup-contents-select-label"> Enter your reason </label>
+                  <textarea class="form-control" name="reason"></textarea>
+               </div>
+               <div class="popup-contents-select">
+                  <label class="popup-contents-select-label"> Choose a order </label>
+                  <div class="js-select">
+                     <select name="booking_id" >
+                        {% for booking in user.booking_set.all %}
+                        {% if booking.status == 1 %}
+                        <option value="{{ booking.id }}">#{{ booking.booking_id }}-{{ booking.hotel.name }}</option>
+                        {% endif %}
+                        {% endfor %}
+                     </select>
+                  </div>
+               </div>
+               <div class="popup-contents-btn flex-btn">
+                  <a href="javascript:void(0)" class="dash-btn popup-close"> <i class="las la-arrow-left"></i> Go Back </a>
+                  <button class="dash-btn btn-cancelled " type="submit" name="submit" value="cancel" >Cancel</button>
+               </div>
+            </form>
+         </div>
+      </div>
+     
+      {% include 'account/footer.html' %}

@@ -1,0 +1,131 @@
+{% load static %}
+{% include 'account/header.html' %}
+    <div class="breadcrumb-area breadcrumb-padding">
+      <div class="container custom-container-one">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb-contents">
+              <h4 class="breadcrumb-contents-title"> Cancellation & Refund </h4>
+              <ul class="breadcrumb-contents-list list-style-none">
+                <li class="breadcrumb-contents-list-item">
+                  <a href="index.html" class="breadcrumb-contents-list-item-link"> Home </a>
+                </li>
+                <li class="breadcrumb-contents-list-item"> Cancellation </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="body-overlay"></div>
+    <div class="dashboard-area section-bg-2 dashboard-padding">
+      <div class="container">
+        <div class="dashboard-contents-wrapper">
+          <div class="dashboard-icon">
+            <div class="sidebar-icon">
+              <i class="las la-bars"></i>
+            </div>
+          </div>
+          {% include 'account/navbar.html' %}
+          <div class="dashboard-right-contents mt-4 mt-lg-0">
+            {% for cancellation in user.canceled_booking_set.all %}
+                <div class="single-reservation bg-white base-padding">
+                
+                <div class="single-reservation-expandIcon"> <i class="las la-angle-down"></i> </div>
+                <div class="single-reservation-head">
+                    <div class="single-reservation-flex">
+                        <div class="single-reservation-content">
+                            <h5 class="single-reservation-content-title"> Reservation ID </h5>
+                            <span class="single-reservation-content-id"> #{{ cancellation.booking.booking_id }} </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-reservation-inner">
+                    <div class="single-reservation-item">
+                        <div class="single-reservation-name">
+                            <h5 class="single-reservation-name-title"> {{ user.first_name }} {{ user.last_name }} </h5>
+                            <p class="single-reservation-name-para"> {{ user.profile.address }} </p>
+                        </div>
+                    </div>
+                    <div class="single-reservation-item">
+                        <div class="single-reservation-details">
+                            <div class="single-reservation-details-item">
+                            <span class="single-reservation-details-subtitle"> Check in </span>
+                            <h5 class="single-reservation-details-title"> {{ cancellation.booking.check_in }} </h5>
+                            </div>
+                            <div class="single-reservation-details-item">
+                            <span class="single-reservation-details-subtitle"> Check Out </span>
+                            <h5 class="single-reservation-details-title"> {{ cancellation.booking.check_out }}</h5>
+                            </div>
+                            <div class="single-reservation-details-item">
+                            <span class="single-reservation-details-subtitle"> Guests & Rooms </span>
+                            <h5 class="single-reservation-details-title"> {{ cancellation.booking.guest }} Person, {{ booking_get.room }} Rooms </h5>
+                            </div>
+                            <div class="single-reservation-details-item">
+                            <span class="single-reservation-details-subtitle"> Booked </span>
+                            <h5 class="single-reservation-details-title"> {{ cancellation.booking.date|date }} </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-reservation-item">
+                        
+                        <div class="single-reservation-flex">
+                            <div class="single-reservation-content">
+                            <h5 class="single-reservation-content-title"> Total Bill </h5>
+                            <span class="single-reservation-content-price"> {{ general_list.currency_symbol|safe }}{{ cancellation.booking.amount }} </span>
+                            </div>
+                        
+                        </div><br>
+                        <div class="single-reservation-flex">
+                            <div class="single-reservation-content">
+                            <h5 class="single-reservation-name-title"> Reason </h5>
+                            <p class="single-reservation-name-para">  {{ cancellation.reason }}  </p>
+                            </div>
+                        
+                        </div>
+                       
+                        
+                    </div>
+                    <div class="single-reservation-item">
+                    <div class="single-reservation-request">
+                        <ul class="single-reservation-request-list list-style-none">
+                            <li class="single-reservation-request-list-item success">
+                                <span class="single-reservation-request-list-item-number"> 1 </span>
+                                <div class="single-reservation-request-list-item-contents">
+                                <h5 class="single-reservation-name-title"> Cancelled and Refund Requested </h5>
+                                <p class="single-reservation-name-para"> {{ cancellation.date }} </p>
+                                </div>
+                            </li>
+                            <li class="single-reservation-request-list-item success">
+                                <span class="single-reservation-request-list-item-number"> 2 </span>
+                                <div class="single-reservation-request-list-item-contents">
+                                <h5 class="single-reservation-name-title"> Review </h5>
+                                <p class="single-reservation-name-para"> Our review team is reviewing your refund request and it may take upto 2-3 business days to complete </p>
+                                </div>
+                            </li>
+                            {% if cancellation.status == 1 %}
+                            <li class="single-reservation-request-list-item current">
+                                <span class="single-reservation-request-list-item-number"> 3 </span>
+                                <div class="single-reservation-request-list-item-contents">
+                                <h5 class="single-reservation-name-title"> Refunded </h5>
+                                <p class="single-reservation-name-para"> We have initiate a refund back to your deposit account </p>
+                                </div>
+                            </li>
+                            {% endif %}
+                        
+                        </li>
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+                
+                </div>
+                {% endfor %}
+
+         
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include 'account/footer.html' %}

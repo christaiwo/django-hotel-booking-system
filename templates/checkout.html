@@ -1,0 +1,139 @@
+{% load static %}
+{% include 'account/header.html' %}
+
+    <div class="breadcrumb-area breadcrumb-padding">
+      <div class="container custom-container-one">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb-contents">
+              <h4 class="breadcrumb-contents-title"> Checkout Details </h4>
+              <ul class="breadcrumb-contents-list list-style-none">
+                <li class="breadcrumb-contents-list-item">
+                  <a href="{% url 'home' %}" class="breadcrumb-contents-list-item-link"> Home </a>
+                </li>
+                <li class="breadcrumb-contents-list-item"> Checkout </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="Checkout-area section-bg-2 pat-100 pab-100">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-xl-8 col-lg-7">
+            <div class="checkout-wrapper">
+              <div class="checkout-single bg-white radius-10">
+                <h4 class="checkout-title"> Booking Information </h4>
+                <div class="checkout-contents mt-3">
+                  <div class="checkout-form custom-form">
+                   
+                      <div class="input-flex-item">
+                        <div class="single-input mt-4">
+                          <label class="label-title"> First Name </label>
+                          <input class="form--control" type="text" name="name" value="{{booking_get.user.first_name}}" readonly placeholder="Type First Name">
+                        </div>
+                        <div class="single-input mt-4">
+                          <label class="label-title"> Last Name </label>
+                          <input class="form--control" type="text" name="name" value="{{booking_get.user.first_name}}" readonly placeholder="Type Last Name">
+                        </div>
+                      </div>
+                      <div class="input-flex-item">
+                        <div class="single-input mt-4">
+                          <label class="label-title"> Mobile Number </label>
+                          <input class="form--control" id="phone" type="tel" value="{{booking_get.user.profile.phone_no}}" readonly placeholder="Type Mobile Number">
+                        </div>
+                        <div class="single-input mt-4">
+                          <label class="label-title"> Email Address </label>
+                          <input class="form--control" type="text" name="email" value="{{booking_get.user.email}}" readonly placeholder="Type Email">
+                        </div>
+                      </div>
+                      <div class="input-flex-item">
+                        <div class="single-input mt-4">
+                          <label class="label-title"> Address </label>
+                          <input class="form--control" type="text" name="address"  value="{{booking_get.user.profile.address}}" readonly placeholder="Type Address">
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-5">
+            <div class="sticky-top">
+              <div class="checkout-widget checkout-widget-padding widget bg-white radius-10">
+                <div class="checkout-sidebar">
+                  <h4 class="checkout-sidebar-title"> Booking Details </h4>
+                  <div class="checkout-sidebar-contents">
+                    <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
+                      <li class="list">
+                        <span class="regular"> Checking In </span>
+                        <span class="strong"> {{ booking_get.check_in }} </span>
+                      </li>
+                      <li class="list">
+                        <span class="regular"> Checking Out </span>
+                        <span class="strong"> {{ booking_get.check_out }} </span>
+                      </li>
+                      <li class="list">
+                        <span class="regular"> Number of Rooms </span>
+                        <span class="strong"> {{ booking_get.room }} </span>
+                      </li>
+                      <li class="list">
+                        <span class="regular"> Number of Person </span>
+                        <span class="strong"> {{ booking_get.guest }} Person </span>
+                      </li>
+                    </ul>
+                    <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
+                      <li class="list">
+                        <span class="regular"> Total </span>
+                        <span class="strong color-one fs-20"> {{ general_list.currency_symbol|safe }}{{ booking_get.amount }} </span>
+                      </li>
+                    </ul>
+                    <div class="btn-wrapper mt-4 text-center">
+                      <form action="" method="POST" id="paymentForm">
+                        {% csrf_token %}
+                        <input type="hidden" id="email-address" value="{{user.email}}" required />
+                        <input type="hidden" id="first-name" value="{{user.first_name}}" />
+                        <input type="hidden" id="last-name" value="{{user.last_name}}" />
+                        <input type="hidden" id="cartid" value="{{booking_get.booking_id}}" />
+                        <input type="hidden" id="amount" value="{{booking_get.amount}}" readonly  class="form-control" required >
+                        
+                        <button class="cmn-btn btn-bg-1 btn-small" type="submit" onclick="payWithPaystack()" >PAY & CONFIRM</button>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+    <script type="text/javascript">
+      const paymentForm = document.getElementById('paymentForm');
+      paymentForm.addEventListener("submit", payWithPaystack, false);
+      function payWithPaystack(e) {
+        e.preventDefault();
+    
+        let handler = PaystackPop.setup({
+          key: '{{general_list.paystack_pk}}', // Replace with your public key
+          email: document.getElementById("email-address").value,
+          amount: document.getElementById("amount").value * 100,
+          
+          ref: document.getElementById("cartid").value, // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+          // label: "Optional string that replaces customer email"
+          onClose: function(){
+            document.getElementById('window-closed').innerHTML = '<div class="alert alert-danger text-center text-uppercase">Payment Canceled</div>'
+          },
+          callback: function(response){
+            window.location = "/checkout-confirm/"+response.reference;
+          }
+        });
+    
+        handler.openIframe();
+      }
+    </script>
+   {% include 'account/footer.html' %}
